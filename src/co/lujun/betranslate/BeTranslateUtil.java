@@ -1,7 +1,5 @@
 package co.lujun.betranslate;
 
-import java.io.*;
-
 import org.apache.poi.hssf.usermodel.HSSFWorkbook;
 import org.apache.poi.openxml4j.exceptions.InvalidFormatException;
 import org.apache.poi.ss.usermodel.*;
@@ -18,17 +16,17 @@ import javax.xml.parsers.ParserConfigurationException;
 import javax.xml.transform.*;
 import javax.xml.transform.dom.DOMSource;
 import javax.xml.transform.stream.StreamResult;
-import java.io.File;
-import java.io.IOException;
+import java.io.*;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.Locale;
 
 /**
- * Created by lujun on 16/8/30.
+ * Author: lujun(http://blog.lujun.co)
+ * Date: 2016-8-30 10:01
  */
-public class BeTranslate {
+public class BeTranslateUtil {
 
     public static void main(String[] args) {
 //        try {

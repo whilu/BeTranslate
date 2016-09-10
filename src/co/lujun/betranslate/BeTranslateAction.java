@@ -2,14 +2,18 @@ package co.lujun.betranslate;
 
 import com.intellij.openapi.actionSystem.AnAction;
 import com.intellij.openapi.actionSystem.AnActionEvent;
+import com.intellij.openapi.actionSystem.PlatformDataKeys;
+
+import javax.swing.*;
 
 /**
- * Created by lujun on 16/8/27.
+ * Author: lujun(http://blog.lujun.co)
+ * Date: 2016-8-31 10:48
  */
 public class BeTranslateAction extends AnAction {
 
     @Override
     public void actionPerformed(AnActionEvent e) {
-        // TODO: insert action logic here
+        BeTranslateForm form = new BeTranslateForm(e.getData(PlatformDataKeys.PROJECT));
     }
 }
