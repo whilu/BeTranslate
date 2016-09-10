@@ -28,72 +28,60 @@ import java.util.Locale;
  */
 public class BeTranslateUtil {
 
-    public static void main(String[] args) {
-//        try {
-//            Workbook workbook = Workbook.getWorkbook(new File("src/co/lujun/kor.xlsx"));
-//            Sheet sheet = workbook.getSheet(0);
-//
-//            System.out.println("sheet 0 cols = " + sheet.getColumns());
-//            System.out.println("sheet 0 rows = " + sheet.getRows());
-//
-//            for (int i = 0; i < sheet.getRows(); i++) {
-//                Cell keyCell = sheet.getCell(i, 0);
-//                Cell valueCell = sheet.getCell(i, 1);
-//                System.out.println("key = " + keyCell.getContents());
-//                System.out.println("value = " + valueCell.getContents());
-//            }
-//        }catch (IOException e){
-//            e.printStackTrace();
-//        }catch (BiffException e){
-//            e.printStackTrace();
-//        }
-
+    public static boolean doTranslate(String inputFilePath, String outputPath, String translateLang, int sheetIndex,
+                                   int startRow, int endRow, int keyColumn, int valueColumn) {
+        boolean translateResult = false;
         try {
             Workbook workbook;
-            if (isExcel2007("kor.xlsx")){
-                workbook = new XSSFWorkbook(new File("src/co/lujun/kor.xlsx"));
+            if (!inputFilePath.matches("^.+\\\\.(?i)(xlsx)$")){
+                workbook = new XSSFWorkbook(inputFilePath);
             }else {
-                workbook = new HSSFWorkbook(new FileInputStream(new File("src/co/lujun/kor.xlsx")));
+                workbook = new HSSFWorkbook(new FileInputStream(new File(inputFilePath)));
             }
 
-            Sheet sheet = workbook.getSheetAt(0);
-
-//            System.out.println("sheet 0 rows = " + sheet.getPhysicalNumberOfRows());
+            Sheet sheet = workbook.getSheetAt(sheetIndex);
+            endRow = endRow < 0 ? sheet.getPhysicalNumberOfRows() : endRow;
 
             Document document = DocumentBuilderFactory.newInstance().newDocumentBuilder().newDocument();
-
             Element resource = document.createElement("resource");
             resource.setAttribute("xmlns:tools", "http://schemas.android.com/tools");
-
             document.appendChild(resource);
 
-            for (int i = 0; i < sheet.getPhysicalNumberOfRows(); i++) {
+            for (int i = startRow; i < endRow; i++) {
                 Row row = sheet.getRow(i);
-//                System.out.println("row " + i + " cols = " + row.getPhysicalNumberOfCells());
+                int cellNumInRow = row.getPhysicalNumberOfCells();
+                if (cellNumInRow <= 0){
+                    continue;
+                }
+                keyColumn = cellNumInRow > keyColumn ? keyColumn : cellNumInRow;
+                valueColumn = cellNumInRow > valueColumn ? valueColumn : cellNumInRow;
 
-                Cell keyCell = row.getCell(0);
-                Cell valueCell = row.getCell(1);
-
-//                System.out.println("key = " + keyCell.getStringCellValue());
-//                System.out.println("value = " + valueCell.getStringCellValue());
+                Cell keyCell = row.getCell(keyColumn);
+                Cell valueCell = row.getCell(valueColumn);
 
                 Element element = document.createElement("string");
                 element.setAttribute("name", keyCell.getStringCellValue());
                 element.appendChild(document.createTextNode(valueCell.getStringCellValue()));
                 resource.appendChild(element);
             }
-
             Transformer transformer = TransformerFactory.newInstance().newTransformer();
             DOMSource domSource = new DOMSource(document);
             transformer.setOutputProperty(OutputKeys.ENCODING, "utf-8");
             transformer.setOutputProperty(OutputKeys.INDENT, "yes");
 
-            PrintWriter printWriter = new PrintWriter(new FileOutputStream("string.xml"));
+            String filePath = outputPath + "/values-" + translateLang + "/strings.xml";
+            File file = new File(filePath);
+            if (!file.getParentFile().exists()){
+                file.getParentFile().mkdirs();
+            }
+            PrintWriter printWriter = new PrintWriter(new FileOutputStream(filePath, false));
             StreamResult result = new StreamResult(printWriter);
             transformer.transform(domSource, result);
+            translateResult = true;
+
+            // print as XML
+            parseXml(filePath);
         }catch (IOException e){
-            e.printStackTrace();
-        }catch (InvalidFormatException e){
             e.printStackTrace();
         }catch (ParserConfigurationException e){
             e.printStackTrace();
@@ -102,8 +90,7 @@ public class BeTranslateUtil {
         }catch (TransformerException e){
             e.printStackTrace();
         }
-
-        parseXml("string.xml");
+        return translateResult;
     }
 
     public static void parseXml(String fileName){
@@ -167,9 +154,5 @@ public class BeTranslateUtil {
         }
 
         return cellStr;
-    }
-
-    public static boolean isExcel2007(String fileName){
-        return fileName.matches("^.+\\\\.(?i)(xlsx)$");
     }
 }

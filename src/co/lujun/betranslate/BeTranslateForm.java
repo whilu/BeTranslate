@@ -4,6 +4,7 @@ import com.intellij.openapi.fileChooser.FileChooser;
 import com.intellij.openapi.fileChooser.FileChooserDescriptor;
 import com.intellij.openapi.fileChooser.FileChooserDescriptorFactory;
 import com.intellij.openapi.project.Project;
+import com.intellij.openapi.ui.Messages;
 import com.intellij.openapi.vfs.VirtualFile;
 import org.apache.http.util.TextUtils;
 
@@ -23,7 +24,7 @@ public class BeTranslateForm extends JFrame {
     private JComboBox comboBoxLang;
     private JSpinner spinnerValueColumn;
     private JSpinner spinnerKeyColumn;
-    private JTextField textFieldOutputSrc;
+    private JTextField textFieldOutputPath;
     private JButton btnChooseOutput;
     private JButton btnOk;
     private JSpinner spinnerStartRow;
@@ -80,7 +81,7 @@ public class BeTranslateForm extends JFrame {
             public void actionPerformed(ActionEvent e) {
                 VirtualFile[] virtualFiles = FileChooser.chooseFiles(outputFileChooserDesc, null, null);
                 if (virtualFiles != null && virtualFiles.length > 0) {
-                    textFieldOutputSrc.setText(virtualFiles[0].getPath());
+                    textFieldOutputPath.setText(virtualFiles[0].getPath());
                 }
             }
         });
@@ -103,7 +104,7 @@ public class BeTranslateForm extends JFrame {
             textHint.setText("Input file path can not be empty!");
             btnChooseInput.requestFocus();
             return;
-        }else if (TextUtils.isEmpty(textFieldOutputSrc.getText())){
+        }else if (TextUtils.isEmpty(textFieldOutputPath.getText())){
             textHint.setText("Output path can not be empty!");
             btnChooseOutput.requestFocus();
             return;
@@ -111,9 +112,9 @@ public class BeTranslateForm extends JFrame {
             textHint.setText("Target translation language can not be empty!");
             comboBoxLang.requestFocus();
             return;
-        }else if (TextUtils.isEmpty(textFieldOutputSrc.getText())){
+        }else if (TextUtils.isEmpty(textFieldOutputPath.getText())){
             textHint.setText("Output path can not be empty!");
-            textFieldOutputSrc.requestFocus();
+            textFieldOutputPath.requestFocus();
             return;
         }else if ((int)spinnerSheetIndex.getValue() < 0){
             textHint.setText("Please set the sheet index greater than 0!");
@@ -138,6 +139,22 @@ public class BeTranslateForm extends JFrame {
             return;
         }
 
-
+        boolean success = BeTranslateUtil.doTranslate(
+                textFieldInputSrc.getText(),
+                textFieldOutputPath.getText(),
+                comboBoxLang.getSelectedItem().toString(),
+                (int) spinnerSheetIndex.getValue(),
+                (int) spinnerStartRow.getValue(),
+                (int) spinnerEndRow.getValue (),
+                (int) spinnerKeyColumn.getValue(),
+                (int) spinnerValueColumn.getValue());
+        if (success){
+            Messages.showMessageDialog("Generate file '" + textFieldOutputPath.getText() + "/values-" +
+                    comboBoxLang.getSelectedItem().toString() + "/strings.xml" + "' success!", "BeTranslate",
+                    Messages.getInformationIcon());
+            System.exit(0);
+        }else {
+            Messages.showMessageDialog("Generate file failed!", "BeTranslate", Messages.getWarningIcon());
+        }
     }
 }
