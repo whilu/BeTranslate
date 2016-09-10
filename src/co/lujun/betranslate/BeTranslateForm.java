@@ -44,6 +44,7 @@ public class BeTranslateForm extends JFrame {
     private FileChooserDescriptor inputFileChooserDesc, outputFileChooserDesc;
 
     public BeTranslateForm(Project project){
+        super("BeTranslate");
         setContentPane(rootPanelContainer);
         setPreferredSize(new Dimension(500, 240));
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);

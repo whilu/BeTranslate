@@ -1,0 +1,5 @@
+<?xml version="1.0" encoding="utf-8" standalone="no"?>
+<resource xmlns:tools="http://schemas.android.com/tools">
+<string name="key_col_A_row_4">value_col_C_row_4</string>
+<string name="key_col_A_row_5">value_col_C_row_5</string>
+</resource>

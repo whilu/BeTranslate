@@ -16,7 +16,7 @@ doc.appendChild(resource)
 for rownum in range(table.nrows):
  string = doc.createElement('string')
  string.setAttribute('name', table.cell_value(rownum, 0))
- string.appendChild(doc.createTextNode(table.cell_value(rownum, 2)))
+ string.appendChild(doc.createTextNode(table.cell_value(rownum, 1)))
  resource.appendChild(string)
 
 print doc.toprettyxml()

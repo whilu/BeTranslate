@@ -1,8 +1,8 @@
 <idea-plugin version="2">
   <id>com.your.company.unique.plugin.id</id>
-  <name>Plugin display name here</name>
-  <version>1.0</version>
-  <vendor email="support@yourcompany.com" url="http://www.yourcompany.com">YourCompany</vendor>
+  <name>BeTranslate</name>
+  <version>0.9.0</version>
+  <vendor email="lujun.byte@gmail.com" url="http://www.lujun.co">lujun.co</vendor>
 
   <description><![CDATA[
       Enter short description for your plugin here.<br>
