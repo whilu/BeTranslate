@@ -1,17 +1,18 @@
 <idea-plugin version="2">
-  <id>com.your.company.unique.plugin.id</id>
+  <id>co.lujun.plugin.betranslate</id>
   <name>BeTranslate</name>
   <version>0.9.0</version>
-  <vendor email="lujun.byte@gmail.com" url="http://www.lujun.co">lujun.co</vendor>
+  <vendor email="lujun.byte@gmail.com" url="http://www.lujun.co">lujun</vendor>
 
   <description><![CDATA[
-      Enter short description for your plugin here.<br>
-      <em>most HTML tags may be used</em>
+      <html>Generate Android string resource from Excel<br/>
+      <a href="https://github.com/whilu/BeTranslate">BeTranslate on GitHub</a>
+      </html>
     ]]></description>
 
   <change-notes><![CDATA[
-      Add change notes here.<br>
-      <em>most HTML tags may be used</em>
+      <li>0.9.0(2016-9-10)<br/>
+      Alpha version(0.9.0)<br/></li>
     ]]>
   </change-notes>
 
@@ -32,8 +33,8 @@
     <!-- Add your actions here -->
     <action id="BeTranslate.BeTranslateAction" class="co.lujun.betranslate.BeTranslateAction" text="BeTranslate"
             description="Generate Android string resource from Excel">
-      <add-to-group group-id="EditMenu" anchor="first"/>
-      <keyboard-shortcut keymap="$default" first-keystroke="meta T" second-keystroke="shift meta T"/>
+      <add-to-group group-id="EditMenu" anchor="last"/>
+      <keyboard-shortcut keymap="$default" first-keystroke="alt T" second-keystroke="shift alt T"/>
     </action>
   </actions>
 </idea-plugin>

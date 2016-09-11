@@ -1,6 +1,7 @@
 package co.lujun.betranslate;
 
 import org.apache.poi.hssf.usermodel.HSSFWorkbook;
+import org.apache.poi.openxml4j.exceptions.InvalidFormatException;
 import org.apache.poi.ss.usermodel.*;
 import org.apache.poi.xssf.usermodel.XSSFWorkbook;
 import org.w3c.dom.Document;
@@ -23,7 +24,7 @@ public class BeTranslateUtil {
                                    int startRow, int endRow, int keyColumn, int valueColumn) {
         boolean translateResult = false;
         try {
-            Workbook workbook;
+            Workbook workbook/* = WorkbookFactory.create(new File(inputFilePath))*/;
             if (inputFilePath.matches("[\\s\\S]*?([^\\/]*?\\.xlsx)")){
                 workbook = new XSSFWorkbook(inputFilePath);
             }else {
@@ -34,7 +35,7 @@ public class BeTranslateUtil {
             endRow = endRow < 0 ? sheet.getPhysicalNumberOfRows() : endRow;
 
             Document document = DocumentBuilderFactory.newInstance().newDocumentBuilder().newDocument();
-            Element resource = document.createElement("resource");
+            Element resource = document.createElement("resources");
             resource.setAttribute("xmlns:tools", "http://schemas.android.com/tools");
             document.appendChild(resource);
 
@@ -80,7 +81,9 @@ public class BeTranslateUtil {
             e.printStackTrace();
         }catch (TransformerException e){
             e.printStackTrace();
-        }
+        }/*catch (InvalidFormatException e){
+            e.printStackTrace();
+        }*/
         return translateResult;
     }
 

@@ -95,7 +95,8 @@ public class BeTranslateForm extends JFrame {
         btnCancel.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                System.exit(0);
+                setVisible(false);
+                dispose();
             }
         });
     }
@@ -153,7 +154,8 @@ public class BeTranslateForm extends JFrame {
             Messages.showMessageDialog("Generate file '" + textFieldOutputPath.getText() + "/values-" +
                     comboBoxLang.getSelectedItem().toString() + "/strings.xml" + "' success!", "BeTranslate",
                     Messages.getInformationIcon());
-            System.exit(0);
+            setVisible(false);
+            dispose();
         }else {
             Messages.showMessageDialog("Generate file failed!", "BeTranslate", Messages.getWarningIcon());
         }
