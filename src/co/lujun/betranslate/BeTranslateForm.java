@@ -32,6 +32,9 @@ public class BeTranslateForm extends JFrame {
     private JSpinner spinnerSheetIndex;
     private JLabel textHint;
     private JButton btnCancel;
+    private JCheckBox cbNeedFill;
+    private JTextField textFieldReferXmlSrc;
+    private JButton btnChooseReferXml;
 
     private static final String[] SUPPORT_LANGS = new String[]{
         "zh-rHK", "zh-rTW", "zh-rCN", "th-rTH", "sv-rSE", "sr-rRS", "sl-rSI", "sk-rSK", "ro-rRO", "pt-rPT",
@@ -41,12 +44,12 @@ public class BeTranslateForm extends JFrame {
         "en-rNZ", "en-rIN", "en-rIE", "en-rCA", "en-rAU", "en-rGB", "en-rUS", "vi-rVN", "uk-rUA", "r-rTR", "tl-rPH"
     };
 
-    private FileChooserDescriptor inputFileChooserDesc, outputFileChooserDesc;
+    private FileChooserDescriptor inputFileChooserDesc, outputFileChooserDesc, referXmlFileChooserDesc;
 
     public BeTranslateForm(Project project){
         super("BeTranslate");
         setContentPane(rootPanelContainer);
-        setPreferredSize(new Dimension(500, 240));
+        setPreferredSize(new Dimension(530, 260));
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         pack();
         setResizable(false);
@@ -57,6 +60,7 @@ public class BeTranslateForm extends JFrame {
     private void initView(Project project){
         inputFileChooserDesc = FileChooserDescriptorFactory.createSingleFileDescriptor();
         outputFileChooserDesc = FileChooserDescriptorFactory.createSingleFolderDescriptor();
+        referXmlFileChooserDesc = FileChooserDescriptorFactory.createSingleFolderDescriptor();
 
         for (String lang : SUPPORT_LANGS) {
             comboBoxLang.addItem(lang);
@@ -86,6 +90,15 @@ public class BeTranslateForm extends JFrame {
                 }
             }
         });
+        btnChooseReferXml.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                VirtualFile[] virtualFiles = FileChooser.chooseFiles(referXmlFileChooserDesc, null, null);
+                if (virtualFiles != null && virtualFiles.length > 0) {
+                    textFieldReferXmlSrc.setText(virtualFiles[0].getPath());
+                }
+            }
+        });
         btnOk.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
@@ -95,8 +108,7 @@ public class BeTranslateForm extends JFrame {
         btnCancel.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                setVisible(false);
-                dispose();
+                System.exit(0);
             }
         });
     }
@@ -139,6 +151,10 @@ public class BeTranslateForm extends JFrame {
             textHint.setText("Please set the 'value' column number greater than 0!");
             spinnerValueColumn.requestFocus();
             return;
+        }else if (cbNeedFill.isSelected() && TextUtils.isEmpty(textFieldReferXmlSrc.getText())){
+            textHint.setText("The reference 'xml' file path can not be empty!");
+            btnChooseReferXml.requestFocus();
+            return;
         }
 
         boolean success = BeTranslateUtil.doTranslate(
@@ -149,13 +165,14 @@ public class BeTranslateForm extends JFrame {
                 (int) spinnerStartRow.getValue(),
                 (int) spinnerEndRow.getValue (),
                 (int) spinnerKeyColumn.getValue(),
-                (int) spinnerValueColumn.getValue());
+                (int) spinnerValueColumn.getValue(),
+                cbNeedFill.isSelected(),
+                textFieldReferXmlSrc.getText());
         if (success){
             Messages.showMessageDialog("Generate file '" + textFieldOutputPath.getText() + "/values-" +
                     comboBoxLang.getSelectedItem().toString() + "/strings.xml" + "' success!", "BeTranslate",
                     Messages.getInformationIcon());
-            setVisible(false);
-            dispose();
+            System.exit(0);
         }else {
             Messages.showMessageDialog("Generate file failed!", "BeTranslate", Messages.getWarningIcon());
         }
