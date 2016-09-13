@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <form xmlns="http://www.intellij.com/uidesigner/form/" version="1" bind-to-class="co.lujun.betranslate.BeTranslateForm">
-  <grid id="27dc6" binding="rootPanelContainer" layout-manager="GridLayoutManager" row-count="7" column-count="5" same-size-horizontally="false" same-size-vertically="false" hgap="-1" vgap="-1">
+  <grid id="27dc6" binding="rootPanelContainer" layout-manager="GridLayoutManager" row-count="8" column-count="5" same-size-horizontally="false" same-size-vertically="false" hgap="-1" vgap="-1">
     <margin top="0" left="0" bottom="0" right="0"/>
     <constraints>
       <xy x="20" y="19" width="588" height="300"/>
@@ -128,7 +128,7 @@
       </component>
       <component id="253a9" class="javax.swing.JButton" binding="btnOk">
         <constraints>
-          <grid row="6" column="4" row-span="1" col-span="1" vsize-policy="0" hsize-policy="3" anchor="0" fill="0" indent="0" use-parent-layout="false"/>
+          <grid row="7" column="4" row-span="1" col-span="1" vsize-policy="0" hsize-policy="3" anchor="0" fill="0" indent="0" use-parent-layout="false"/>
         </constraints>
         <properties>
           <text value="Ok"/>
@@ -164,18 +164,9 @@
         </constraints>
         <properties/>
       </component>
-      <component id="8a7ad" class="javax.swing.JLabel" binding="textHint">
-        <constraints>
-          <grid row="6" column="0" row-span="1" col-span="3" vsize-policy="0" hsize-policy="0" anchor="8" fill="0" indent="1" use-parent-layout="false"/>
-        </constraints>
-        <properties>
-          <foreground color="-65536"/>
-          <text value=""/>
-        </properties>
-      </component>
       <component id="fd889" class="javax.swing.JButton" binding="btnCancel">
         <constraints>
-          <grid row="6" column="3" row-span="1" col-span="1" vsize-policy="0" hsize-policy="3" anchor="4" fill="0" indent="5" use-parent-layout="false"/>
+          <grid row="7" column="3" row-span="1" col-span="1" vsize-policy="0" hsize-policy="3" anchor="4" fill="0" indent="5" use-parent-layout="false"/>
         </constraints>
         <properties>
           <text value="Cancel"/>
@@ -204,6 +195,23 @@
           </grid>
         </constraints>
         <properties/>
+      </component>
+      <component id="ce510" class="javax.swing.JButton" binding="btnExport">
+        <constraints>
+          <grid row="7" column="0" row-span="1" col-span="1" vsize-policy="0" hsize-policy="3" anchor="8" fill="0" indent="0" use-parent-layout="false"/>
+        </constraints>
+        <properties>
+          <text value="Export"/>
+        </properties>
+      </component>
+      <component id="e4c7c" class="javax.swing.JLabel" binding="textHint">
+        <constraints>
+          <grid row="6" column="0" row-span="1" col-span="3" vsize-policy="0" hsize-policy="0" anchor="8" fill="0" indent="1" use-parent-layout="false"/>
+        </constraints>
+        <properties>
+          <foreground color="-65536"/>
+          <text value=""/>
+        </properties>
       </component>
     </children>
   </grid>

@@ -8,11 +8,16 @@ Generate Android string resource from Excel.
 
 ## Install
 
-Download 'BeTranslate.zip', install this plugin from disk...
+* Search 'BeTranslate' on Browse repositores, install...
+* Download [BeTranslate.zip](BeTranslate.zip), install this plugin from disk...
 
 ## Usage
 
 ### Step 1
+
+#### Shortcut
+
+option + T (OS X), alt + T (WIN)
 
 Make sure your translation excel format like the below(A key column, and some value columns)
 
@@ -32,8 +37,14 @@ Configure your translate information:
 | Key col | The column index for the 'key' column(index start with 0)
 | Value col | The column index for the 'value' column(index start with 0)
 | Output directory | The output directory for generated file
+| Need fill with the refer xml? | If you check this and set a refer 'xml' file path, this will help to fill the output resource file
 
 ## Change logs
+###1.0.0(2016-9-13)
+- Support fill 'string.xml'
+- Support export 'string.xml' to Excel
+- Fix bugs
+
 ###0.9.0(2016-9-10)
 - Alpha version(0.9.0)
 

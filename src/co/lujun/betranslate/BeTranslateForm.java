@@ -35,6 +35,7 @@ public class BeTranslateForm extends JFrame {
     private JCheckBox cbNeedFill;
     private JTextField textFieldReferXmlSrc;
     private JButton btnChooseReferXml;
+    private JButton btnExport;
 
     private static final String[] SUPPORT_LANGS = new String[]{
         "zh-rHK", "zh-rTW", "zh-rCN", "th-rTH", "sv-rSE", "sr-rRS", "sl-rSI", "sk-rSK", "ro-rRO", "pt-rPT",
@@ -50,7 +51,7 @@ public class BeTranslateForm extends JFrame {
         super("BeTranslate");
         setContentPane(rootPanelContainer);
         setPreferredSize(new Dimension(530, 260));
-        setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
         pack();
         setResizable(false);
         initView(project);
@@ -108,7 +109,14 @@ public class BeTranslateForm extends JFrame {
         btnCancel.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                System.exit(0);
+                dispose();
+            }
+        });
+        btnExport.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                ExportExcelForm form = new ExportExcelForm(project);
+                form.setVisible(true);
             }
         });
     }
@@ -172,7 +180,7 @@ public class BeTranslateForm extends JFrame {
             Messages.showMessageDialog("Generate file '" + textFieldOutputPath.getText() + "/values-" +
                     comboBoxLang.getSelectedItem().toString() + "/strings.xml" + "' success!", "BeTranslate",
                     Messages.getInformationIcon());
-            System.exit(0);
+            dispose();
         }else {
             Messages.showMessageDialog("Generate file failed!", "BeTranslate", Messages.getWarningIcon());
         }

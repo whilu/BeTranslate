@@ -1,7 +1,7 @@
 <idea-plugin version="2">
   <id>co.lujun.plugin.betranslate</id>
   <name>BeTranslate</name>
-  <version>0.9.0</version>
+  <version>1.0.0</version>
   <vendor email="lujun.byte@gmail.com" url="http://www.lujun.co">lujun</vendor>
 
   <description><![CDATA[
@@ -11,8 +11,16 @@
     ]]></description>
 
   <change-notes><![CDATA[
-      <li>0.9.0(2016-9-10)<br/>
-      Alpha version(0.9.0)<br/></li>
+      <li>
+      1.0.0(2016-9-13)<br/>
+      - Support fill 'string.xml'
+      - Support export 'string.xml' to Excel
+      - Fix bugs
+      </li>
+      <li>
+      0.9.0(2016-9-10)<br/>
+      - Alpha version(0.9.0)<br/>
+      </li>
     ]]>
   </change-notes>
 
@@ -34,7 +42,7 @@
     <action id="BeTranslate.BeTranslateAction" class="co.lujun.betranslate.BeTranslateAction" text="BeTranslate"
             description="Generate Android string resource from Excel">
       <add-to-group group-id="EditMenu" anchor="last"/>
-      <keyboard-shortcut keymap="$default" first-keystroke="alt T" second-keystroke="shift alt T"/>
+      <keyboard-shortcut keymap="$default" first-keystroke="alt T"/>
     </action>
   </actions>
 </idea-plugin>
