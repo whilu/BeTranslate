@@ -94,20 +94,20 @@ public class BeTranslateUtil {
         return translateResult;
     }
 
-    public static boolean fillTranslation(List<String> keys, String originXmlFilePath, String needFillXmlFilePath){
+    public static boolean fillTranslation(List<String> keys, String referXmlFilePath, String needFillXmlFilePath){
         boolean result = false;
         try {
-            Document document = DocumentBuilderFactory.newInstance().newDocumentBuilder().parse(originXmlFilePath);
-            Element element = document.getElementById("resources");
+            Document document = DocumentBuilderFactory.newInstance().newDocumentBuilder().parse(referXmlFilePath);
+            Node element = document.getChildNodes().item(0);
             NodeList nodeList;
-            if (element != null && (nodeList = element.getElementsByTagName("string")) != null) {
+            if (element != null && (nodeList = element.getChildNodes()) != null) {
                 Document fillDocument = DocumentBuilderFactory.newInstance().newDocumentBuilder()
                         .parse(needFillXmlFilePath);
-                Element resources = fillDocument.getElementById("resources");
+                Node resources = fillDocument.getChildNodes().item(0);
                 for (int i = 0; i < nodeList.getLength(); i++) {
                     Node child = nodeList.item(i);
                     NamedNodeMap map = child.getAttributes();
-                    Node node = map.getNamedItem("name");
+                    Node node = map.item(0);
                     if (node != null && !keys.contains(node.getNodeValue())){
                         keys.add(node.getNodeValue());
                         Element childString = fillDocument.createElement("string");
@@ -128,11 +128,11 @@ public class BeTranslateUtil {
         return result;
     }
 
-    public static boolean fillTranslation(String originXmlFilePath, String curXmlFilePath, String needFillXmlFilePath){
+    public static boolean fillTranslation(String originXmlFilePath, String referXmlFilePath, String needFillXmlFilePath){
         List<String> keys = new ArrayList<String>();
         // TODO get keys from xml file
 
-        return fillTranslation(keys, curXmlFilePath, needFillXmlFilePath);
+        return fillTranslation(keys, referXmlFilePath, needFillXmlFilePath);
     }
 
     public static void printXml(String fileName){

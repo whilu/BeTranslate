@@ -60,7 +60,7 @@ public class BeTranslateForm extends JFrame {
     private void initView(Project project){
         inputFileChooserDesc = FileChooserDescriptorFactory.createSingleFileDescriptor();
         outputFileChooserDesc = FileChooserDescriptorFactory.createSingleFolderDescriptor();
-        referXmlFileChooserDesc = FileChooserDescriptorFactory.createSingleFolderDescriptor();
+        referXmlFileChooserDesc = FileChooserDescriptorFactory.createSingleFileDescriptor();
 
         for (String lang : SUPPORT_LANGS) {
             comboBoxLang.addItem(lang);

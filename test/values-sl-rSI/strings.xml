@@ -1,8 +1,13 @@
 <?xml version="1.0" encoding="utf-8" standalone="no"?>
 <resource xmlns:tools="http://schemas.android.com/tools">
 <string name="key_col_A_row_1">value_col_B_row_1</string>
+    <string name="add_key_col_A_row_1">value_col_B_row_5</string>
 <string name="key_col_A_row_2">value_col_B_row_2</string>
+    <string name="add_key_col_A_row_2">value_col_B_row_5</string>
 <string name="key_col_A_row_3">value_col_B_row_3</string>
+    <string name="add_key_col_A_row_3">value_col_B_row_5</string>
 <string name="key_col_A_row_4">value_col_B_row_4</string>
 <string name="key_col_A_row_5">value_col_B_row_5</string>
+    <string name="add_key_col_A_row_5">value_col_B_row_5</string>
+    <string name="add_key_col_A_row_4">value_col_B_row_5</string>
 </resource>
