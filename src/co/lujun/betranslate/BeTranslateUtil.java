@@ -61,20 +61,10 @@ public class BeTranslateUtil {
                 keys.add(keyCell.getStringCellValue());
                 resource.appendChild(element);
             }
-            Transformer transformer = TransformerFactory.newInstance().newTransformer();
-            DOMSource domSource = new DOMSource(document);
-            transformer.setOutputProperty(OutputKeys.ENCODING, "utf-8");
-            transformer.setOutputProperty(OutputKeys.INDENT, "yes");
 
             String filePath = outputPath + "/values-" + translateLang + "/strings.xml";
-            File file = new File(filePath);
-            if (!file.getParentFile().exists()){
-                file.getParentFile().mkdirs();
-            }
-            PrintWriter printWriter = new PrintWriter(new FileOutputStream(filePath, false));
-            StreamResult result = new StreamResult(printWriter);
-            transformer.transform(domSource, result);
-            translateResult = needFill ? fillTranslation(keys, referXmlPath, filePath) : true;
+            boolean saveResult = saveXmlDocument(document, filePath);
+            translateResult = needFill && saveResult ? fillTranslation(keys, referXmlPath, filePath) : saveResult;
 
             // print as XML
             if (translateResult) {
@@ -83,10 +73,6 @@ public class BeTranslateUtil {
         }catch (IOException e){
             e.printStackTrace();
         }catch (ParserConfigurationException e){
-            e.printStackTrace();
-        }catch (TransformerConfigurationException e){
-            e.printStackTrace();
-        }catch (TransformerException e){
             e.printStackTrace();
         }/*catch (InvalidFormatException e){
             e.printStackTrace();
@@ -98,25 +84,23 @@ public class BeTranslateUtil {
         boolean result = false;
         try {
             Document document = DocumentBuilderFactory.newInstance().newDocumentBuilder().parse(referXmlFilePath);
-            Node element = document.getChildNodes().item(0);
-            NodeList nodeList;
-            if (element != null && (nodeList = element.getChildNodes()) != null) {
+            NodeList nodeList = document.getElementsByTagName("string");
+            if (nodeList != null) {
                 Document fillDocument = DocumentBuilderFactory.newInstance().newDocumentBuilder()
                         .parse(needFillXmlFilePath);
-                Node resources = fillDocument.getChildNodes().item(0);
+                Element resources = (Element) fillDocument.getElementsByTagName("resources").item(0);
                 for (int i = 0; i < nodeList.getLength(); i++) {
-                    Node child = nodeList.item(i);
-                    NamedNodeMap map = child.getAttributes();
-                    Node node = map.item(0);
-                    if (node != null && !keys.contains(node.getNodeValue())){
-                        keys.add(node.getNodeValue());
+                    Element child = (Element) nodeList.item(i);
+                    Node attr = child.getAttributeNode("name");
+                    if (attr != null && !keys.contains(attr.getNodeValue())){
+                        keys.add(attr.getNodeValue());
                         Element childString = fillDocument.createElement("string");
-                        childString.setAttribute("name", node.getNodeValue());
-                        childString.appendChild(fillDocument.createTextNode(child.getNodeValue()));
-                        resources.appendChild(element);
+                        childString.setAttribute("name", attr.getNodeValue());
+                        childString.appendChild(fillDocument.createTextNode(child.getTextContent()));
+                        resources.appendChild(childString);
                     }
                 }
-                result = true;
+                result = saveXmlDocument(document, needFillXmlFilePath);;
             }
         }catch (ParserConfigurationException e){
             e.printStackTrace();
@@ -133,6 +117,32 @@ public class BeTranslateUtil {
         // TODO get keys from xml file
 
         return fillTranslation(keys, referXmlFilePath, needFillXmlFilePath);
+    }
+
+    public static boolean saveXmlDocument(Document document, String filePath){
+        boolean result = false;
+        try {
+            Transformer transformer = TransformerFactory.newInstance().newTransformer();
+            DOMSource domSource = new DOMSource(document);
+            transformer.setOutputProperty(OutputKeys.ENCODING, "utf-8");
+            transformer.setOutputProperty(OutputKeys.INDENT, "yes");
+
+            File file = new File(filePath);
+            if (!file.getParentFile().exists()) {
+                file.getParentFile().mkdirs();
+            }
+            PrintWriter printWriter = new PrintWriter(new FileOutputStream(filePath, false));
+            StreamResult streamResult = new StreamResult(printWriter);
+            transformer.transform(domSource, streamResult);
+            result = true;
+        }catch (TransformerConfigurationException e){
+            e.printStackTrace();
+        }catch (TransformerException e){
+            e.printStackTrace();
+        }catch (IOException e){
+            e.printStackTrace();
+        }
+        return result;
     }
 
     public static void printXml(String fileName){
