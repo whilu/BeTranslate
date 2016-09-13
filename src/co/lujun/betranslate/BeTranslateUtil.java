@@ -145,6 +145,38 @@ public class BeTranslateUtil {
         return result;
     }
 
+    public static boolean generateExcel(String xmlFilePath, String outputExcelPath){
+        boolean result = false;
+        try {
+            Document document = DocumentBuilderFactory.newInstance().newDocumentBuilder().parse(xmlFilePath);
+            NodeList nodeList = document.getElementsByTagName("string");
+            if (nodeList != null) {
+                Workbook workbook = new XSSFWorkbook();
+                Sheet sheet = workbook.createSheet();
+                for (int i = 0; i < nodeList.getLength(); i++) {
+                    Row row = sheet.createRow(i);
+                    Cell keyCell = row.createCell(0);
+                    Cell valueCell = row.createCell(1);
+                    Element child = (Element) nodeList.item(i);
+                    Node attr = child.getAttributeNode("name");
+                    if (attr != null) {
+                        keyCell.setCellValue(attr.getNodeValue());
+                    }
+                    valueCell.setCellValue(child.getTextContent());
+                }
+                workbook.write(new FileOutputStream(outputExcelPath));
+                result = true;
+            }
+        }catch (ParserConfigurationException e){
+            e.printStackTrace();
+        }catch (IOException e){
+            e.printStackTrace();
+        }catch (SAXException e){
+            e.printStackTrace();
+        }
+        return result;
+    }
+
     public static void printXml(String fileName){
         try{
             BufferedReader bufferedReader = new BufferedReader(new FileReader(fileName));
