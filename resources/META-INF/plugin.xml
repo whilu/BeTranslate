@@ -13,8 +13,8 @@
   <change-notes><![CDATA[
       <li>
       1.0.0(2016-9-13)<br/>
-      - Support fill 'string.xml'
-      - Support export 'string.xml' to Excel
+      - Support fill 'string.xml'<br/>
+      - Support export 'string.xml' to Excel<br/>
       - Fix bugs
       </li>
       <li>
