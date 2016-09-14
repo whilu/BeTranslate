@@ -1,7 +1,7 @@
 <idea-plugin version="2">
   <id>co.lujun.plugin.betranslate</id>
   <name>BeTranslate</name>
-  <version>1.0.2</version>
+  <version>1.0.3</version>
   <vendor email="lujun.byte@gmail.com" url="http://www.lujun.co">lujun</vendor>
 
   <description><![CDATA[
@@ -11,6 +11,11 @@
     ]]></description>
 
   <change-notes><![CDATA[
+      <li>
+      1.0.3(2016-9-14)<br/>
+      - Support resize window<br/>
+      - Fix bugs
+      </li>
       <li>
       1.0.2(2016-9-13)<br/>
       - Support fill 'string.xml'<br/>

@@ -53,7 +53,6 @@ public class BeTranslateForm extends JFrame {
         setPreferredSize(new Dimension(530, 260));
         setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
         pack();
-        setResizable(false);
         initView(project);
         setVisible(true);
     }
