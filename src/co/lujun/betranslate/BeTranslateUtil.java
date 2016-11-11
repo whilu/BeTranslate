@@ -1,10 +1,15 @@
 package co.lujun.betranslate;
 
 import org.apache.poi.hssf.usermodel.HSSFWorkbook;
-import org.apache.poi.openxml4j.exceptions.InvalidFormatException;
-import org.apache.poi.ss.usermodel.*;
+import org.apache.poi.ss.usermodel.Cell;
+import org.apache.poi.ss.usermodel.Row;
+import org.apache.poi.ss.usermodel.Sheet;
+import org.apache.poi.ss.usermodel.Workbook;
 import org.apache.poi.xssf.usermodel.XSSFWorkbook;
-import org.w3c.dom.*;
+import org.w3c.dom.Document;
+import org.w3c.dom.Element;
+import org.w3c.dom.Node;
+import org.w3c.dom.NodeList;
 import org.xml.sax.SAXException;
 
 import javax.xml.parsers.DocumentBuilderFactory;
@@ -24,7 +29,7 @@ public class BeTranslateUtil {
 
     public static boolean doTranslate(String inputFilePath, String outputPath, String translateLang, int sheetIndex,
                                       int startRow, int endRow, int keyColumn, int valueColumn, boolean needFill,
-                                      String referXmlPath) {
+                                      String referXmlPath, boolean ignoreTranslatableFalse) {
         boolean translateResult = false;
         List<String> keys = new ArrayList<String>();
         try {
@@ -64,7 +69,8 @@ public class BeTranslateUtil {
 
             String filePath = outputPath + "/values-" + translateLang + "/strings.xml";
             boolean saveResult = saveXmlDocument(document, filePath);
-            translateResult = needFill && saveResult ? fillTranslation(keys, referXmlPath, filePath) : saveResult;
+            translateResult = needFill && saveResult ? fillTranslation(keys, referXmlPath, filePath,
+                    ignoreTranslatableFalse) : saveResult;
 
             // print as XML
             if (translateResult) {
@@ -80,27 +86,31 @@ public class BeTranslateUtil {
         return translateResult;
     }
 
-    public static boolean fillTranslation(List<String> keys, String referXmlFilePath, String needFillXmlFilePath){
+    public static boolean fillTranslation(List<String> keys, String referXmlFilePath, String needFillXmlFilePath,
+                                          boolean ignoreTranslatableFalse){
         boolean result = false;
         try {
-            Document document = DocumentBuilderFactory.newInstance().newDocumentBuilder().parse(referXmlFilePath);
-            NodeList nodeList = document.getElementsByTagName("string");
+            Document referDocument = DocumentBuilderFactory.newInstance().newDocumentBuilder().parse(referXmlFilePath);
+            NodeList nodeList = referDocument.getElementsByTagName("string");
             if (nodeList != null) {
-                Document fillDocument = DocumentBuilderFactory.newInstance().newDocumentBuilder()
+                Document needFillDocument = DocumentBuilderFactory.newInstance().newDocumentBuilder()
                         .parse(needFillXmlFilePath);
-                Element resources = (Element) fillDocument.getElementsByTagName("resources").item(0);
+                Element resources = (Element) needFillDocument.getElementsByTagName("resources").item(0);
                 for (int i = 0; i < nodeList.getLength(); i++) {
                     Element child = (Element) nodeList.item(i);
                     Node attr = child.getAttributeNode("name");
-                    if (attr != null && !keys.contains(attr.getNodeValue())){
+                    Node translatableAttr = child.getAttributeNode("translatable");
+                    if ((!ignoreTranslatableFalse ||
+                            (translatableAttr == null || !translatableAttr.getNodeValue().equals("false"))) &&
+                            attr != null && !keys.contains(attr.getNodeValue())){
                         keys.add(attr.getNodeValue());
-                        Element childString = fillDocument.createElement("string");
+                        Element childString = needFillDocument.createElement("string");
                         childString.setAttribute("name", attr.getNodeValue());
-                        childString.appendChild(fillDocument.createTextNode(child.getTextContent()));
+                        childString.appendChild(needFillDocument.createTextNode(child.getTextContent()));
                         resources.appendChild(childString);
                     }
                 }
-                result = saveXmlDocument(document, needFillXmlFilePath);;
+                result = saveXmlDocument(needFillDocument, needFillXmlFilePath);;
             }
         }catch (ParserConfigurationException e){
             e.printStackTrace();
@@ -112,11 +122,12 @@ public class BeTranslateUtil {
         return result;
     }
 
-    public static boolean fillTranslation(String originXmlFilePath, String referXmlFilePath, String needFillXmlFilePath){
+    public static boolean fillTranslation(String originXmlFilePath, String referXmlFilePath, String needFillXmlFilePath,
+                                          boolean ignoreTranslatableFalse){
         List<String> keys = new ArrayList<String>();
         // TODO get keys from xml file
 
-        return fillTranslation(keys, referXmlFilePath, needFillXmlFilePath);
+        return fillTranslation(keys, referXmlFilePath, needFillXmlFilePath, ignoreTranslatableFalse);
     }
 
     public static boolean saveXmlDocument(Document document, String filePath){

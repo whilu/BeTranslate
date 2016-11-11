@@ -36,6 +36,7 @@ public class BeTranslateForm extends JFrame {
     private JTextField textFieldReferXmlSrc;
     private JButton btnChooseReferXml;
     private JButton btnExport;
+    private JCheckBox cbIgnoreTranslatableFalse;
 
     private static final String[] SUPPORT_LANGS = new String[]{
         "zh-rHK", "zh-rTW", "zh-rCN", "th-rTH", "sv-rSE", "sr-rRS", "sl-rSI", "sk-rSK", "ro-rRO", "pt-rPT",
@@ -50,7 +51,7 @@ public class BeTranslateForm extends JFrame {
     public BeTranslateForm(Project project){
         super("BeTranslate");
         setContentPane(rootPanelContainer);
-        setPreferredSize(new Dimension(530, 260));
+        setPreferredSize(new Dimension(530, 270));
         setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
         pack();
         initView(project);
@@ -174,7 +175,8 @@ public class BeTranslateForm extends JFrame {
                 (int) spinnerKeyColumn.getValue(),
                 (int) spinnerValueColumn.getValue(),
                 cbNeedFill.isSelected(),
-                textFieldReferXmlSrc.getText());
+                textFieldReferXmlSrc.getText(),
+                cbIgnoreTranslatableFalse.isSelected());
         if (success){
             Messages.showMessageDialog("Generate file '" + textFieldOutputPath.getText() + "/values-" +
                     comboBoxLang.getSelectedItem().toString() + "/strings.xml" + "' success!", "BeTranslate",

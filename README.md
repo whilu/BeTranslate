@@ -40,7 +40,16 @@ Configure your translate information:
 | Need fill with the refer xml? | If you check this and set a refer 'xml' file path, this will help to fill the output resource file
 
 ## Change logs
-###1.0.0(2016-9-13)
+     
+###1.0.4(2016-11-11)
+- Support ignore [translatable="false"] attribute
+- Fix bugs
+
+###1.0.3(2016-9-14)
+- Support resize window
+- Fix bugs
+
+###1.0.2(2016-9-13)
 - Support fill 'string.xml'
 - Support export 'string.xml' to Excel
 - Fix bugs
