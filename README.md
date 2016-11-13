@@ -1,5 +1,7 @@
 # BeTranslate
 
+English | [中文](README-zh_CN.md)
+
 Generate Android string resource from Excel.
 
 ## Screenshots
@@ -38,6 +40,7 @@ Configure your translate information:
 | Value col | The column index for the 'value' column(index start with 0)
 | Output directory | The output directory for generated file
 | Need fill with the refer xml? | If you check this and set a refer 'xml' file path, this will help to fill the output resource file
+| Ignore [translatable="false"] | If you check this and check the 'fill' operation, this will ignore those items that marked [translatable="false"]
 
 ## Change logs
      
