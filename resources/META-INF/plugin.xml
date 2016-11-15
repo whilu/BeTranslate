@@ -1,7 +1,7 @@
 <idea-plugin version="2">
   <id>co.lujun.plugin.betranslate</id>
   <name>BeTranslate</name>
-  <version>1.0.4</version>
+  <version>1.0.5</version>
   <vendor email="lujun.byte@gmail.com" url="http://www.lujun.co">lujun</vendor>
 
   <description><![CDATA[
@@ -11,6 +11,10 @@
     ]]></description>
 
   <change-notes><![CDATA[
+      <li>
+      1.0.5(2016-11-15)<br/>
+      - Support edit the target language
+      </li>
       <li>
       1.0.4(2016-11-11)<br/>
       - Support ignore [translatable="false"] attribute<br/>

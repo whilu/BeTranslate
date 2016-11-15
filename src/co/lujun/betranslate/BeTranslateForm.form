@@ -38,7 +38,9 @@
             <preferred-size width="69" height="26"/>
           </grid>
         </constraints>
-        <properties/>
+        <properties>
+          <editable value="true"/>
+        </properties>
       </component>
       <component id="f4a92" class="javax.swing.JLabel">
         <constraints>

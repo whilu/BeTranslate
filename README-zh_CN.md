@@ -43,6 +43,9 @@ option + T (OS X), alt + T (WIN)
 | Ignore [translatable="false"] | 勾选此项以及上一项将忽略被标记为 [translatable="false"] 的条目
 
 ## Change logs
+
+###1.0.5(2016-11-15)
+- Support edit the target language
      
 ###1.0.4(2016-11-11)
 - Support ignore [translatable="false"] attribute

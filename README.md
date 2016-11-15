@@ -43,6 +43,9 @@ Configure your translate information:
 | Ignore [translatable="false"] | If you check this and check the 'fill' operation, this will ignore those items that marked [translatable="false"]
 
 ## Change logs
+
+###1.0.5(2016-11-15)
+- Support edit the target language
      
 ###1.0.4(2016-11-11)
 - Support ignore [translatable="false"] attribute

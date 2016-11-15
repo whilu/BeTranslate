@@ -43,7 +43,8 @@ public class BeTranslateForm extends JFrame {
         "pt-rBR", "pl-rPL", "nl-rNL", "nl-BE", "nb-rNO", "lv-rLV", "lt-rLT", "ko-rKR", "ja-rJP", "it-rIT", "it-rCH",
         "in-rID", "hu-rHU", "hr-rHR", "hi-rIN", "iw-rIL", "fr-rFR", "fr-rCH", "fr-rCA", "fr-rBE", "fi-rFI", "es-rUS",
         "es-rES", "de-rLI", "de-rDE", "de-rCH", "de-rAT", "ca-rES", "bg-rBG", "ar-rIL", "ar-rEG", "en-rZA", "en-rSG",
-        "en-rNZ", "en-rIN", "en-rIE", "en-rCA", "en-rAU", "en-rGB", "en-rUS", "vi-rVN", "uk-rUA", "r-rTR", "tl-rPH"
+        "en-rNZ", "en-rIN", "en-rIE", "en-rCA", "en-rAU", "en-rGB", "en-rUS", "vi-rVN", "uk-rUA", "tr-rTR", "tl-rPH",
+        "cs-rCZ", "da-rDK", "el-rGR","sr-RS","pt-PT","ro_RO"
     };
 
     private FileChooserDescriptor inputFileChooserDesc, outputFileChooserDesc, referXmlFileChooserDesc;
