@@ -44,23 +44,23 @@ Configure your translate information:
 
 ## Change logs
 
-###1.0.5(2016-11-15)
+### 1.0.5(2016-11-15)
 - Support edit the target language
      
-###1.0.4(2016-11-11)
+### 1.0.4(2016-11-11)
 - Support ignore [translatable="false"] attribute
 - Fix bugs
 
-###1.0.3(2016-9-14)
+### 1.0.3(2016-9-14)
 - Support resize window
 - Fix bugs
 
-###1.0.2(2016-9-13)
+### 1.0.2(2016-9-13)
 - Support fill 'string.xml'
 - Support export 'string.xml' to Excel
 - Fix bugs
 
-###0.9.0(2016-9-10)
+### 0.9.0(2016-9-10)
 - Alpha version(0.9.0)
 
 ## About
